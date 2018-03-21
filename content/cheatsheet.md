@@ -46,6 +46,12 @@ draft: false
 15. 本地文件传输到远程机器
 
 	`scp -P [port] /path/to/source [user]@[ip]:/path/to/target`
+	
+16. 不挂断地运行命令
+
+	`nohup [command] [arg..] [&]`
+	
+	无论是否将 nohup 的命令重定向到终端，输出都将附加到当前目录的 nohup.out 文件中
 
 ## 数据库
 
