@@ -416,6 +416,7 @@ https://wiki.archlinux.org/index.php/Netctl_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%8
 ## 1. 命令行下弹出usb设备：
 
 	```
+	pacman -S udisks2
 	udisksctl unmount -b /dev/sdb1
 	udisksctl power-off -b /dev/sdb
 	```
@@ -424,11 +425,8 @@ https://wiki.archlinux.org/index.php/Netctl_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%8
 
 `sudo mount -o loop sth.iso /mnt/iso`
 
-## 3. 通过特定网卡搜索 Wi-Fi
 
-`iwlist [interface] scan | less`
-
-## 4. 设置笔记本合盖不休眠
+## 3. 设置笔记本合盖不休眠
 
 `vim /etc/systemd/logind.conf`
 
@@ -438,11 +436,11 @@ https://wiki.archlinux.org/index.php/Netctl_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%8
 
 `systemctl restart systemd-logind`
 
-## 5. 调整屏幕亮度
+## 4. 调整屏幕亮度
 
 `echo 100 > /sys/class/backlight/intel_backlight/brightness`
 
-## 6. 设置开机自动连接 Wi-Fi
+## 5. 设置开机自动连接 Wi-Fi
 
 安装`netctl` Wi-Fi 管理工具：
 	
@@ -456,6 +454,10 @@ https://wiki.archlinux.org/index.php/Netctl_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%8
 设置开机启动服务：
 	
 `netctl enable wlp2s0-303`
+
+## 6. 通过特定网卡搜索 Wi-Fi
+
+`iwlist [interface] scan | less`
 
 # 一点总结
 
