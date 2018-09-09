@@ -14,7 +14,19 @@ draft: false
 6. go get 只下载不安装：
 
 	`go get -d`
-	
+
+3. string 和 int 转换 
+
+	```go
+	//string到int  
+	int,err:=strconv.Atoi(string)  
+	//string到int64  
+	int64, err := strconv.ParseInt(string, 10, 64)  
+	//int到string  
+	string:=strconv.Itoa(int)  
+	//int64到string  
+	string:=strconv.FormatInt(int64,10)  
+	```	
 
 ## Linux
 
