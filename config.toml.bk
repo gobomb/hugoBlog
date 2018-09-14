@@ -1,22 +1,21 @@
 baseURL = "http://localhost:1313/"
 languageCode = "en"
-defaultContentLanguage = "en"                             # en / zh-cn / ... (This field determines which i18n file to use)
+defaultContentLanguage = "en"
 title = "Present Day, Present Time"
 enableRobotsTXT = true
 enableEmoji = true
 theme = "even"
 
-preserveTaxonomyNames = true
 hasCJKLanguage = true     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
-paginate = 5                                              # 首页每页显示的文章数
+paginate = 5                                              # （可选）首页显示的文章条目数量，默认为10
 disqusShortname = ""      # disqus_shortname
 googleAnalytics = "UA-112443219-1"      # UA-XXXXXXXX-X
 copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
 
-[author]                  # essential                     # 必需
-  name = "gobomb"
+[author]                  # require                       # 必需
+  name = "cym"
 
-[sitemap]                 # essential                     # 必需
+[sitemap]                 # require                       # 必需
   changefreq = "weekly"
   priority = 0.5
   filename = "sitemap.xml"
@@ -31,16 +30,16 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   weight = 30
   identifier = "archives"
   url = "/post/"
-[[menu.main]]
-  name = "Tags"
-  weight = 40
-  identifier = "tags"
-  url = "/tags/"
-[[menu.main]]
- name = "Categories"
- weight = 50
- identifier = "categories"
- url = "/categories/"
+ [[menu.main]]
+   name = "Tags"
+   weight = 40
+   identifier = "tags"
+   url = "/tags/"
+ [[menu.main]]
+  name = "Categories"
+  weight = 50
+  identifier = "categories"
+  url = "/categories/"
 [[menu.main]]
   name = "About"
   weight = 60
@@ -58,53 +57,40 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   url = "/cheatsheet"
 
 [params]
-  version = "3.x"           # Used to give a friendly message when you have an incompatible update
   debug = false             # If true, load `eruda.min.js`. See https://github.com/liriliri/eruda
 
   since = "2017"            # Site creation time          # 站点建立时间
 
-  # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
+  # site info (option)                                    # 站点信息（可选）
   logoTitle = "Present Day, Present Time"        # default: the title value    # 默认值: 上面设置的title值
   keywords = ["Golang", "backend","DevOps"]
   description = "The road to DevOps."
 
-  # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目，建议修改为一个较大的值
-  archivePaginate = 10
-
-  # show 'xx Posts In Total' in archive page ?            # 是否在归档页显示文章的总数
-  showArchiveCount = true
+  # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目
+  archive-paginate = 10
 
   # The date format to use; for a list of valid formats, see https://gohugo.io/functions/format/
   dateFormatToUse = "2006-01-02"
 
   # show word count and read time ?                       # 是否显示字数统计与阅读时间
-  moreMeta = false
+  moreMeta = true
 
-  # 一些全局开关，你也可以在每一篇内容的 front matter 中针对单篇内容关闭或开启某些功能，在 archetypes/default.md 查看更多信息。
-  # Some global options, you can also close or open something in front matter for a single post, see more information from `archetypes/default.md`.
+  # 一些全局开关，你可以在每一篇内容的 front matter 中单独关闭某些选项
+  # Some global options, you can close something in front matter.
   toc = true                                                                            # 是否开启目录
-  autoCollapseToc = false  # Auto expand and collapse toc                              # 目录自动展开/折叠
-  fancybox = true          # see https://github.com/fancyapps/fancybox                 # 是否启用fancybox（图片可点击）
-  mathjax = false           # see https://www.mathjax.org/                              # 是否使用mathjax（数学公式）
-  mathjaxEnableSingleDollar = false                                                     # 是否使用 $...$ 即可進行inline latex渲染
-  mathjaxEnableAutoNumber = false                                                       # 是否使用公式自动编号
+  fancybox = true           # see https://github.com/fancyapps/fancybox                 # 是否启用fancybox（图片可点击）
+  bootcdn = false           # In china. @Deprecated: use [params.publicCDN]             # 是否使用bootcdn(@Deprecated: 请使用[params.publicCDN])
+  mathjax = true            # see https://www.mathjax.org/                              # 是否使用mathjax（数学公式）
+  linkToMarkDown = false    # if you config contentCopyright and hugo output .md files. # 是否在链接到markdown原始文件（如果你配置了下面的许可协议并允许hugo生成markdown文件）
 
-  postMetaInFooter = true   # contain author, lastMod, markdown link, license           # 包含作者，上次修改时间，markdown链接，许可信息
-  linkToMarkDown = false    # Only effective when hugo will output .md files.           # 链接到markdown原始文件（仅当允许hugo生成markdown文件时有效）
-  contentCopyright = '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'     # e.g. '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
+  contentCopyright = '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
 
   changyanAppid = ""        # Changyan app id             # 畅言
   changyanAppkey = ""       # Changyan app key
-  livereUID = ""            # LiveRe UID                  # 来必力
   baidu_push = false        # baidu push                  # 百度
   baidu_analytics = ""      # Baidu Analytics
   baidu_verification = ""   # Baidu Verification
   google_verification = ""  # Google_Verification         # 谷歌
-
-  # Link custom CSS and JS assets
-  #   (relative to /static/css and /static/js respectively)
-  customCSS = []
-  customJS = []
 
   [params.publicCDN]        # load these files from public cdn                          # 启用公共CDN，需自行定义
     enable = false
@@ -119,43 +105,17 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
     timeagoJS = '<script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.min.js" integrity="sha256-jwCP0NAdCBloaIWTWHmW4i3snUNMHUNO+jr9rYd2iOI=" crossorigin="anonymous"></script>'
     timeagoLocalesJS = '<script src="https://cdn.jsdelivr.net/npm/timeago.js@3.0.2/dist/timeago.locales.min.js" integrity="sha256-ZwofwC1Lf/faQCzN7nZtfijVV6hSwxjQMwXL4gn9qU8=" crossorigin="anonymous"></script>'
 
-  # Display a message at the beginning of an article to warn the readers that it's content may be outdated.
-  # 在文章开头显示提示信息，提醒读者文章内容可能过时。
-  [params.outdatedInfoWarning]
+  [params.reward]                                         # 文章打赏
     enable = false
-    hint = 30               # Display hint if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示提醒
-    warn = 180              # Display warning if the last modified time is more than these days ago.    # 如果文章最后更新于这天数之前，显示警告
+    wechat = "/path/to/your/wechat-qr-code.png"           # 微信二维码
+    alipay = "/path/to/your/alipay-qr-code.png"           # 支付宝二维码
+
 
   [params.gitment]          # Gitment is a comment system based on GitHub issues. see https://github.com/imsun/gitment
     owner = "gobomb"              # Your GitHub ID
     repo = "gobomb.github.io"               # The repo to store comments
     clientId = "4957ab69e121b509d750"           # Your client ID
     clientSecret = "4f959986f787cd85c4dfa8470921d8eb1900c622"       # Your client secret
-
-  [params.gitalk]           # Gitalk is a comment system based on GitHub issues. see https://github.com/gitalk/gitalk
-    owner = ""              # Your GitHub ID
-    repo = ""               # The repo to store comments
-    clientId = ""           # Your client ID
-    clientSecret = ""       # Your client secret
-
-  [params.flowchartDiagrams]# see https://blog.olowolo.com/example-site/post/js-flowchart-diagrams/
-    enable = false
-    options = ""
-
-  [params.sequenceDiagrams] # see https://blog.olowolo.com/example-site/post/js-sequence-diagrams/
-    enable = false
-    options = ""            # default: "{theme: 'simple'}"
-
-  [params.busuanzi]         # count web traffic by busuanzi                             # 是否使用不蒜子统计站点访问量
-    enable = false
-    siteUV = true
-    sitePV = true
-    pagePV = true
-
-  [params.reward]                                         # 文章打赏
-    enable = false
-    wechat = "/path/to/your/wechat-qr-code.png"           # 微信二维码
-    alipay = "/path/to/your/alipay-qr-code.png"           # 支付宝二维码
 
   [params.social]                                         # 社交链接
     a-email = "mailto:bombcoder@outlook.com"
@@ -174,18 +134,18 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
 
 # 将下面这段配置取消注释可以使 hugo 生成 .md 文件
 # Uncomment these options to make hugo output .md files.
-#[mediaTypes]
-#  [mediaTypes."text/plain"]
-#    suffix = "md"
-#
-#[outputFormats.MarkDown]
-#  mediaType = "text/plain"
-#  isPlainText = true
-#  isHTML = false
-#
-#[outputs]
-#  home = ["HTML", "RSS"]
-#  page = ["HTML", "MarkDown"]
-#  section = ["HTML", "RSS"]
-#  taxonomy = ["HTML", "RSS"]
-#  taxonomyTerm = ["HTML"]
+[mediaTypes]
+  [mediaTypes."text/plain"]
+    suffixes = ["md"]
+
+[outputFormats.MarkDown]
+  mediaType = "text/plain"
+  isPlainText = true
+  isHTML = false
+
+[outputs]
+  home = ["HTML", "RSS"]
+  page = ["HTML", "MarkDown"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  axonomyTerm = ["HTML"]
