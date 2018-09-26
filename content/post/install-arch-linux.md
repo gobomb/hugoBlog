@@ -1,6 +1,7 @@
 ---
 title: "Arch Linux 安装记录"
 date: 2018-09-09T16:22:20+08:00 
+lastmod: 2018-09-26
 draft: false
 description: "以及一些常用命令的记录"
 keywords: [Linux]
@@ -129,7 +130,6 @@ Arch 官方 Wiki 做得真是很好，基本上遇到问题耐心读一读 Wiki 
 
 	a. 创建引导分区
 		
-		```
 		Welcome to fdisk (util-linux 2.32.1).
 		Changes will remain in memory only, until you decide to write them.
 		Be careful before using the write command.
@@ -208,15 +208,35 @@ Arch 官方 Wiki 做得真是很好，基本上遇到问题耐心读一读 Wiki 
 		root@archiso ~ # mkfs.fat -F32 /dev/sda1
 		mkfs.fat 4.1 (2017-01-24)
 		
-		```
-		
 	b. 创建根分区
 		
-		我这里用了`lvm`,按照上述类似的步骤（输入 p）创建两个分区（`/dev/sda2`和`/dev/sda3`),然后创建物理卷（`pv`),卷组（`vg`),逻辑卷（`lv`),然后格式化逻辑卷，把根分区(`/`)挂载到逻辑卷上面
+	我这里用了`lvm`,按照上述类似的步骤（输入 p）创建两个分区（`/dev/sda2`和`/dev/sda3`),然后创建物理卷（`pv`),卷组（`vg`),逻辑卷（`lv`),然后格式化逻辑卷，把根分区(`/`)挂载到逻辑卷上面
 		
-		```
 		# 创建分区 /dev/sda2 和 /dev/sda3
-		# 参考上一步
+		# 以创建 /dev/sda2 为例：
+		fdisk /dev/sda
+		# 输入 n
+		# 回车（分区号使用默认值2）
+		# 回车（起始扇区使用默认值）
+		# 输入 +50G （结束扇区设置 +50G）
+		# 输入 w 确认生效
+		# 输入 q 退出
+
+		# /dev/sda3 同理，分200G
+
+		# 此时分区信息如下：
+		$ fdisk -l
+		Disk /dev/sda: 465.8 GiB, 500107862016 bytes, 976773168 sectors
+		Units: sectors of 1 * 512 = 512 bytes
+		Sector size (logical/physical): 512 bytes / 4096 bytes
+		I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+		Disklabel type: gpt
+		Disk identifier: 726CADDE-3C28-F747-BAF1-F91A0F82934B
+		
+		Device         Start       End   Sectors  Size Type
+		/dev/sda1       2048   1050623   1048576  512M EFI System
+		/dev/sda2    1050624 105908223 104857600   50G Linux filesystem
+		/dev/sda3  105908224 525338623 419430400  200G Linux filesystem
 		
 		# 创建物理卷
 		pvcreate /dev/sda2 
@@ -236,7 +256,26 @@ Arch 官方 Wiki 做得真是很好，基本上遇到问题耐心读一读 Wiki 
 		# 格式化逻辑卷
 		mkfs.ext4 /dev/mapper/root-root
 		
-		```
+		# 现在分区信息如下
+		$ fdisk -l
+		Disk /dev/sda: 465.8 GiB, 500107862016 bytes, 976773168 sectors
+		Units: sectors of 1 * 512 = 512 bytes
+		Sector size (logical/physical): 512 bytes / 4096 bytes
+		I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+		Disklabel type: gpt
+		Disk identifier: 726CADDE-3C28-F747-BAF1-F91A0F82934B
+		
+		Device         Start       End   Sectors  Size Type
+		/dev/sda1       2048   1050623   1048576  512M EFI System
+		/dev/sda2    1050624 105908223 104857600   50G Linux filesystem
+		/dev/sda3  105908224 525338623 419430400  200G Linux filesystem
+		
+		
+		Disk /dev/mapper/root-root: 45 GiB, 48318382080 bytes, 94371840 sectors
+		Units: sectors of 1 * 512 = 512 bytes
+		Sector size (logical/physical): 512 bytes / 4096 bytes
+		I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
 
 # 挂载分区
 
@@ -415,11 +454,9 @@ https://wiki.archlinux.org/index.php/Netctl_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%8
 
 ## 1. 命令行下弹出usb设备：
 
-	```
 	pacman -S udisks2
 	udisksctl unmount -b /dev/sdb1
 	udisksctl power-off -b /dev/sdb
-	```
 
 ## 2. 挂载iso
 
@@ -465,4 +502,3 @@ https://wiki.archlinux.org/index.php/Netctl_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%8
 
 2. 磁盘分区还是有一定风险的，不熟练的话总是不敢下手，很多操作实际上是不可逆的。必须得清楚知道自己在干嘛，敲起命令来才放心。
 
-3. “一切皆文件”的 UNIX 思想很有意思。
