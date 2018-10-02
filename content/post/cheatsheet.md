@@ -1,10 +1,12 @@
 ---
-title: "Cheatsheet"
+title: "Cheat Sheet"
 date: 2018-03-18T14:02:01+08:00
 draft: false
----
-# Cheatsheet
-
+description: "速查表。新条目更新到评论"
+lastmod: 2018-10-02
+keywords: [cheatsheet]
+tags: [linux,vim,golang,git,cli,cheatsheet,运维]
+categories: [记录]
 ---
 
 ## Linux
@@ -147,6 +149,3 @@ draft: false
     //int64到string  
     string:=strconv.FormatInt(int64,10)  
     ```	
-
-
-

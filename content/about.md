@@ -12,3 +12,5 @@ Go / Vim / DevOps / Beckend / Docker / Kubernetes
 GitHub：https://github.com/gobomb
 
 E-mail：bombcoder@outlook.com
+
+欢迎评论或邮件交流。文章若有错误也希望不吝赐教。

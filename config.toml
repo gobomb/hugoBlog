@@ -51,11 +51,6 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   weight = 70
   identifier = "links"
   url = "/links"
-[[menu.main]]
-  name = "Cheatsheet"
-  weight = 80
-  identifier = "cheatsheet"
-  url = "/cheatsheet"
 
 [params]
   version = "3.x"           # Used to give a friendly message when you have an incompatible update
