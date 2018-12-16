@@ -10,6 +10,6 @@ draft: false
 
 ### ckyOL's b10g | 技术、宅圈 https://blog.ckyol.moe/
 
-### | UZPENG https://uzpeng.githcub.io/
+### | UZPENG https://uzpeng.github.io/
 
 
