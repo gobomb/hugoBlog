@@ -32,3 +32,5 @@ OS: macOS / Ubuntu / Arch
  ckyOL's b10g | 技术、宅圈 https://blog.ckyol.moe/
 
  | UZPENG https://uzpeng.github.io/
+
+Hertz https://liweihao.me/
