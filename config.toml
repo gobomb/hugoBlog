@@ -2,7 +2,10 @@ theme = "basics"
 baseURL = "https://gobomb.github.io"
 languageCode = "en-us"
 title = "Present Day, Present Time"
+googleAnalytics = "UA-112443219-1"
+
 
 [params]
     author = "gobomb"
     github = "gobomb"
+
