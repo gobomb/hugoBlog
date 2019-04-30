@@ -20,13 +20,15 @@ categories: [记录]
 # 解决过程
 参考官方提供的[编译步骤](https://www.v2ray.com/eng/intro/compile.html)：
 
->1. （安装 git 和 golang 环境的步骤略去）
->3. 下载 V2Ray 源文件：`go get -u v2ray.com/core/...`
->4. 下载 V2Ray 扩展包：`go get -u v2ray.com/ext/...`
->5. 生成编译脚本：
+```
+1. （安装 git 和 golang 环境的步骤略去）
+2. 下载 V2Ray 源文件：`go get -u v2ray.com/core/...`
+3. 下载 V2Ray 扩展包：`go get -u v2ray.com/ext/...`
+4. 生成编译脚本：
 `go install v2ray.com/ext/tools/build/vbuild`
->6. 编译 `V2Ray：$GOPATH/bin/vbuild`
->7. V2Ray 程序及配置文件会被放在 `$GOPATH/bin/v2ray-XXX` 文件夹下（XXX 视平台不同而不同）
+5. 编译 `V2Ray：$GOPATH/bin/vbuild`
+6. V2Ray 程序及配置文件会被放在 `$GOPATH/bin/v2ray-XXX` 文件夹下（XXX 视平台不同而不同）
+```
 
 1. 编译 V2Ray 至少要 go1.9 以上的版本
   最新的 v2ray 源码是 go1.9 实现的，如果用 go1.8 进行编译会提示找不到“math/bits”标准库文件
@@ -50,35 +52,37 @@ categories: [记录]
     go1.10beta1 指明使用 beta 版本进行编译
 
 5. 将 vbuild 传到目标机器，执行：
-  ```
-  $ ./vbuild
-  Building V2Ray (custom) for linux mipsle
-  Unable to build V2Ray: exec: "go": executable file not found in $PATH
-  ```
-  这里我理解错误，以为 vbuild 已经是可执行文件，不需要依赖 go 环境。实际上这只是编译脚本，仍然依赖于 go 环境和 v2ray 的依赖包，而目标机器没有 go 环境和 v2ray 的依赖库（install的过程会把需要的依赖库安装到同级别目录下的 pkg 下）。所以按照官方的编译方式达不到交叉编译的目的。
+	
+	  ```
+	  $ ./vbuild
+	  Building V2Ray (custom) for linux mipsle
+	  Unable to build V2Ray: exec: "go": executable file not found in $PATH
 
-    如果要用 vbuild 达到交叉编译的目的，需要把 GOARCH=mipsle GOMIPS=softfloat 环境变量传给 vbuild，并将所有外部命令中的“go”修改为“go1.10beta1”。
+	  ```
 
-    或者自己手动编译。我选择手动编译，比较灵活可控。
+	  这里我理解错误，以为 vbuild 已经是可执行文件，不需要依赖 go 环境。实际上这只是编译脚本，仍然依赖于 go 环境和 v2ray 的依赖包，而目标机器没有 go 环境和 v2ray 的依赖库（install的过程会把需要的依赖库安装到同级别目录下的 pkg 下）。所以按照官方的编译方式达不到交叉编译的目的。
+	
+	  如果要用 vbuild 达到交叉编译的目的，需要把 GOARCH=mipsle GOMIPS=softfloat 环境变量传给 vbuild，并将所有外部命令中的“go”修改为“go1.10beta1”。
+	
+	  或者自己手动编译。我选择手动编译，比较灵活可控。
 
-    查看 vbuild 源码，有类似语句：
+	  查看 vbuild 源码，有类似语句：
+	
+	    ...
+	    // 读取依赖库路径
+	      targetFile := getTargetFile("v2ray", v2rayOS)
+	      targetFileFull := filepath.Join(targetDir, targetFile)
+	      	if err := build.BuildV2RayCore(targetFileFull, v2rayOS, v2rayArch, false); err != nil {
+	      		fmt.Println("Unable to build V2Ray: " + err.Error())
+	      		return
+	      	}
+	    ...
+	
+	    ...
+	    // 执行外部命令
+	    cmd := exec.Command("go", args...)
+	    ...
 
-    ```go
-    ...
-    // 读取依赖库路径
-      targetFile := getTargetFile("v2ray", v2rayOS)
-      targetFileFull := filepath.Join(targetDir, targetFile)
-      	if err := build.BuildV2RayCore(targetFileFull, v2rayOS, v2rayArch, false); err != nil {
-      		fmt.Println("Unable to build V2Ray: " + err.Error())
-      		return
-      	}
-    ...
-
-    ...
-    // 执行外部命令
-    cmd := exec.Command("go", args...)
-    ...
-    ```
 
 6. 手动编译 v2ray 主程序和 v2ctl。主程序需通过 v2ctl 读取配置文件。
 
@@ -114,12 +118,12 @@ categories: [记录]
 
 2. 编译出来的可执行文件有点大，动辄10几M，不利于网络传输，而在路由器这种外存空间有限的硬件上，文件也当然越小越好。[upx](https://github.com/upx/upx)是一个 C++ 写的开源加壳压缩工具，能满足这个需求。
 
-## upx 原理
+### upx 原理
 通过 upx 压缩过的程序和程序库完全没有功能损失和压缩之前一样可正常地运行。upx 利用特殊的算法压缩了二进制，并在文件加了解压缩的指令，cpu 读到这些指令可以自己解压缩。cpu 在执行加壳过的二进制时，相当于先执行了外壳，再通过外壳在内存中把原来的程序解开并执行。
 
 upx 能实现两个需求，一个是压缩，另一个是加密程序，防止程序被别人静态分析。很方便。
 
-## 下载安装 upx
+### 下载安装 upx
 1. 下载 upx：
 
     ```
@@ -138,7 +142,7 @@ upx 能实现两个需求，一个是压缩，另一个是加密程序，防止�
     $ cd upx-3.94-amd64_linux && mv upx $GOPATH/bin
     ```
 
-## 压缩前后对比
+### 压缩前后对比
 
 1. 普通编译，大小为14M：
 
