@@ -594,7 +594,7 @@ RuntimeVersion:  18.09.6
 RuntimeApiVersion:  1.39.0
 ```
 
-因为 contianerd 没有 启用 CRI 插件，所以无法是用 crictl 连接
+因为 contianerd 没有 启用 CRI 插件，所以无法使用 crictl 连接
 
 ```
 [root@node01 ~]# cat /etc/containerd/config.toml | grep cri
