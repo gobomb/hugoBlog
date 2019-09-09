@@ -263,12 +263,12 @@ vethbe310cc8@if3 # 连接容器网卡和cni0的veth设备
     
     ```
     [root@node02 ~]# ip route
-default via 10.10.13.1 dev ens192 proto static metric 100
-10.10.13.0/24 dev ens192 proto kernel scope link src 10.10.13.63 metric 100
-10.244.0.0/24 via 10.244.0.0 dev flannel.1 onlink
-10.244.2.0/24 dev cni0 proto kernel scope link src 10.244.2.1
-10.244.4.0/24 via 10.244.4.0 dev flannel.1 onlink
-172.17.70.0/24 dev docker0 proto kernel scope link src 172.17.70.1
+    default via 10.10.13.1 dev ens192 proto static metric 100
+    10.10.13.0/24 dev ens192 proto kernel scope link src 10.10.13.63 metric 100
+    10.244.0.0/24 via 10.244.0.0 dev flannel.1 onlink
+    10.244.2.0/24 dev cni0 proto kernel scope link src 10.244.2.1
+    10.244.4.0/24 via 10.244.4.0 dev flannel.1 onlink
+    172.17.70.0/24 dev docker0 proto kernel scope link src 172.17.70.1
     ```
 
     从上面的命令可见，如果是发往目标 ip 是在本机网段`10.244.2.0/24`内的，数据包仍然走 cni0；如果是其他网段 `10.244.0.0/24`/`10.244.4.0/24`，则走 flannel.1
