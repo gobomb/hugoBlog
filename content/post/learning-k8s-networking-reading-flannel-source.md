@@ -74,14 +74,14 @@ Server Version: version.Info{Major:"1", Minor:"15", GitVersion:"v1.15.3", GitCom
 NAME     STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION               CONTAINER-RUNTIME
 master   Ready    master   17d   v1.15.3   10.10.13.61   <none>        CentOS Linux 7 (Core)   3.10.0-957.21.2.el7.x86_64   docker://18.9.6
 node02   Ready    <none>   17d   v1.15.3   10.10.13.63   <none>        CentOS Linux 7 (Core)   3.10.0-862.el7.x86_64        docker://18.9.6
-node3    Ready    <none>   33m   v1.15.3   10.10.13.62   <none>        CentOS Linux 7 (Core)   3.10.0-862.el7.x86_64        docker://19.3.2
+node01   Ready    <none>   33m   v1.15.3   10.10.13.62   <none>        CentOS Linux 7 (Core)   3.10.0-862.el7.x86_64        docker://19.3.2
 ```
 
 使用 go-template 输出每个节点分配到的网段：
 
 ```
 $ kubectl get node  -o go-template='{{range .items}} {{.metadata.name}} {{.spec.podCIDR}} {{end}}'
- master 10.244.0.0/24  node02 10.244.2.0/24  node3 10.244.4.0/24
+ master 10.244.0.0/24  node02 10.244.2.0/24  node01 10.244.4.0/24
 ```
 
 ## flanneld 源码阅读
@@ -204,7 +204,7 @@ bridge 二进制会在 node 上生成一个 Linux bridge 设备，默认名字�
                                                                                                 |                                             |              | |
 +---------------------------------------------------------------------------------------------------------------------+                       |              | |
 |                                                                                               |                     |                       +--------------+ |
-|  node3                                                                                        |                     |                                        |
+|  node01                                                                                       |                     |                                        |
 |                                                                                               |                     |                                        |
 |                                                                                               |                     |                                        |
 |        +--------------------+                                                                 |                     |                                        |
