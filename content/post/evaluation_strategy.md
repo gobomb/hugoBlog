@@ -120,7 +120,7 @@ int main()
 ---
 
 
-* 通过引用的副本修改内容，函数内部 o 还是持有对 obj 的引用
+- 通过引用的副本修改内容，函数内部 o 还是持有对 obj 的引用
 	
 	```
 	var obj = {x : 1};
@@ -130,19 +130,20 @@ int main()
 	foo(obj);
 	console.log(obj.x); // 200
 	```
-* 修改引用的副本本身，函数内部的 o 对 obj 的引用断掉了
+
+- 修改引用的副本本身，函数内部的 o 对 obj 的引用断掉了
 	
-	```js
-	var obj = {x : 1};
-	function foo(o) {
-	    o = 100;
-	}
-	foo(obj);
-	console.log(obj.x); // 1
-	```	
+    ```
+    var obj = {x : 1};
+    function foo(o) {
+        o = 100;
+    }
+    foo(obj);
+    console.log(obj.x); // 1
+    ```
+
 
 ## 定义的澄清
-
 
 ### 复制？赋值？
 

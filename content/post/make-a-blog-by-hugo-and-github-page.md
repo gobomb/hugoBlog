@@ -93,7 +93,7 @@ git push -u origin master
 
 1. 将 highlight.js 下载到本地
 
-2. 把 js 库文件`highlight.pack.js` 复制到 `.../themes/rockrock/static/css/`下面；把 `github.css`复制到 `.../themes/rockrock/static/js/`下面；有多种风格样式，我选择的是 `github` 风格
+2. 把 js 库文件`highlight.pack.js` 复制到 `.../themes/rockrock/static/js/`下面；把 `github.css`复制到 `.../themes/rockrock/static/css/`下面；有多种风格样式，我选择的是 `github` 风格
 
 3.  在`.../themes/rockrock/layouts/partials/header.html`里添加以下代码：
 
