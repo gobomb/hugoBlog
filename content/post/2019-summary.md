@@ -41,7 +41,7 @@ coding 方面：做了一些网络配置方面的工作（跨集群网络的设�
 
 《[非暴力沟通](https://book.douban.com/subject/3533221/)》至少三个朋友向我推荐，值得一读再读；《[有限与无限的游戏](https://book.douban.com/subject/25742296/)》转变思维方式的书；《[亲密关系](https://book.douban.com/subject/5952488/)》亲密关系也可以是一门学科，从统计学的角度认识爱与婚姻；《[最初和最终的自由](https://book.douban.com/subject/24859580/)》促使我开始培养冥想的习惯。这几本书对我非常重要，更新了我对人际关系以及情绪管理的认知。
 
-小说：《[远山淡影](https://book.douban.com/subject/5988624/) 》石黑一雄读起来很诡异；《[看不见的爱](https://book.douban.com/subject/34444574/)》果然是哲学家写的小说；《[山月记](https://book.douban.com/subject/20473505/)》“因为害怕自己并非明珠而不敢刻苦琢磨，又因为有几分相信自己是明珠，而不能与瓦砾碌碌为伍，遂逐渐远离世间，疏避人群，结果在内心不断地用愤懑和羞怒饲育着自己懦弱的自尊心”；《[城堡](https://book.douban.com/subject/4909054/)》卡夫卡无法评论；《地下室手记》陀氏太令人震撼了，这本书是重读，第一次读根本就没读懂，也许也是需要一些经历吧；《[眠](https://book.douban.com/subject/21692813/)》中规中矩的村上小说。
+小说：《[远山淡影](https://book.douban.com/subject/5988624/) 》石黑一雄读起来很诡异；《[看不见的爱](https://book.douban.com/subject/34444574/)》果然是哲学家写的小说；《[山月记](https://book.douban.com/subject/20473505/)》“因为害怕自己并非明珠而不敢刻苦琢磨，又因为有几分相信自己是明珠，而不能与瓦砾碌碌为伍，遂逐渐远离世间，疏避人群，结果在内心不断地用愤懑和羞怒饲育着自己懦弱的自尊心”；《[城堡](https://book.douban.com/subject/4909054/)》卡夫卡无法评论；《地下室手记》陀氏太令人震撼了，这本书是重读，第一次读根本就没读懂，也许也是需要一些经历吧；《[眠](https://book.douban.com/subject/21692813/)》中规中矩的村上小说；《了不起的盖茨比》也是重读，失恋套餐……
 
 《[象与骑象人](https://book.douban.com/subject/20260640/)》《[活出生命的意义](https://book.douban.com/subject/5330333/)》《[给心理治疗师的礼物](https://book.douban.com/subject/1178089/)》都是很不错的心理学作品。
 

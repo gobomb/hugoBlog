@@ -153,7 +153,7 @@ upx 能实现两个需求，一个是压缩，另一个是加密程序，防止�
     -rwxr-xr-x. 1 root root 14M Dec 29 14:38 main
     ```
 
-2. go build 时用 ldflags 设置变量的值，-s 去掉符号信息， -w 去掉 DWARF 调试信息（去掉后无法是用 GDB 进行调试），大小为11M：
+2. go build 时用 ldflags 设置变量的值，-s 去掉符号信息， -w 去掉 DWARF 调试信息（去掉后无法使用 GDB 进行调试），大小为11M：
 
     ```
     $ go1.10beta1 build -ldflags '-w -s'
@@ -189,4 +189,4 @@ upx 能实现两个需求，一个是压缩，另一个是加密程序，防止�
 # 参考链接
 1. [解决GO语言编译程序无法在openwrt上运行的问题](https://stray.love/wen-ti-jie-jue-fang-an/jie-jue-goyu-yan-bian-yi-cheng-xu-wu-fa-zai-openwrtshang-yun-xing-de-wen-ti)
 2. [runtime: mips32 soft float point support](https://github.com/golang/go/issues/18162)
-3. [go-mips32 交叉编译go程序 编译kcptun例子](https://github.com/xtaci/kcptun/issues/79)
+

@@ -24,7 +24,7 @@ k8s 的 pod 网络有如下假设:
 
 overlay 是建立在实际物理网络上的一张虚拟逻辑网络，用二层、三层或四层协议来封装 pod 二层数据帧，与 VPN 有些类似，由于存在封包和拆包的过程，性能会有所损耗，flannel使用这种方式；使用路由协议，则 pod 和物理网络共同处于一张大三层网络，calico 使用这种方式。
 
-本文将通过分析 flannel 源码来学习 pod 网络的形成。
+本文将通过分析 [flannel 源码(v0.11.0)](https://github.com/coreos/flannel/tree/ecb6db314e40094a43144b57f29b3ec2164d44c9) 来学习 pod 网络的形成。
 
 ## 术语说明
 
