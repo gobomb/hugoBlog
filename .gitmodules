@@ -1,9 +1,6 @@
 [submodule "public"]
 	path = public
 	url = https://github.com/gobomb/gobomb.github.io.git
-[submodule "themes/even"]
-	path = themes/even
-	url = https://github.com/gobomb/hugo-theme-even-mirror
 [submodule "themes/basics"]
 	path = themes/basics
 	url = https://github.com/arjunkrishnababu96/basics.git
