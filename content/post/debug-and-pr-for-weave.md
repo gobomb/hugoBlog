@@ -69,7 +69,7 @@ namespace、pod、networkpolicy 这几个对象的 informer，分别是作为三
 
 在 client-go 的代码中，我发现了问题所在，panic 会被 defer 函数中的代码阻塞：
 
-```
+```go
 // code in k8s.io/client-go/tools/cache/controller.go
 func (c *controller) Run(stopCh <-chan struct{}) {
     defer utilruntime.HandleCrash()
