@@ -9,7 +9,7 @@ k8s 对象的操作，实现了一个 apiserver 的缓存。这篇笔记主要�
 
 client-go 实现了一个缓存，定期同步和 apiserver / etcd 中的数据，并且提供了一组响应资源变化的回调函数。作为库的用户只要实现回调函数，处理自己关心的资源对象（如Pod、Deployment、自己实现的 CR 等等），而不需要关心和 apiserver 具体的交互逻辑（list and watch）。相当于一个编程框架，让开发者专注于自己的业务逻辑而不是重复实现通用的轮子。
 
-以下通过几个重要的概念来介绍 client-go cache 包（位于 [kubernetes/staging/src/k8s.io/client-go/tools/cache/] (https://github.com/kubernetes/kubernetes/tree/master/staging/src/k8s.io/client-go/tools/cache) 基于 `1c5be7dd5046fba8733f44618fd28fbb79e7db07` ）的机制，名词后面的括号说明这个名词是interface还是struct：
+以下通过几个重要的概念来介绍 client-go cache 包（位于 [kubernetes/staging/src/k8s.io/client-go/tools/cache/](https://github.com/kubernetes/kubernetes/tree/master/staging/src/k8s.io/client-go/tools/cache) 基于 `1c5be7dd5046fba8733f44618fd28fbb79e7db07` ）的机制，名词后面的括号说明这个名词是interface还是struct：
 
 
 1. ClientSet（struct）：封装了 k8s 所有资源对象的获取方式，实现了每一种对象的 list 和 watch 接口，可以通过 http 跟 apiserver 交互。实现了 ListerWatcher 接口。
