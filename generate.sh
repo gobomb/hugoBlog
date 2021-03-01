@@ -1,10 +1,10 @@
 BLOGPATH=`pwd`
 
 
-cd  $BLOGPATH && hugo --theme=basics --baseUrl="https://gobomb.github.io/"
+cd  $BLOGPATH && hugon --theme=basics --baseUrl="https://gobomb.github.io/"
 
 ## update submodule
 # git diff --cached --submodule
 
 ## add GA
-# cp header.html.bak themes/basics/layouts/partials/header.html
+# cp bak/header.html layouts/partials/header.html
