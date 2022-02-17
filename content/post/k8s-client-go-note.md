@@ -118,7 +118,7 @@ client-go 实现了一个缓存，定期同步和 apiserver / etcd 中的数据�
     }
     ```
 
-11. Queue（interface）：拓展了 Store，提供了一个 Pop 方法用来 Process 方法（调用ResourceEventHandler）
+11. Queue（interface）：拓展了 Store，提供了一个 Pop 方法用来 Process 方法（调用ResourceEventHandler）。也实现了 Store 接口，因为底层有 `items map[string]interface{}` 这样的结构，所以操作 map 适用 Store 的操作。除了持有一个 items，还持有一个`queue []string`，用 slice 实现了一个队列，元素就是 map 的 key，按照先来先到的顺序存放和消费。 
 
     ```go
     type Queue interface {
@@ -131,9 +131,9 @@ client-go 实现了一个缓存，定期同步和 apiserver / etcd 中的数据�
 
     ```
 
-12. DeltaFIFO（struct）：是一个 Queue 的实现。生产者是 Reflector ，消费者是 Pop 方法的调用者。Queue 还有另一个实现，叫 FIFO，和 DeltaFIFO 的区别是前者不会弹出对象删除的事件。
+12. DeltaFIFO（struct）：是一个 Queue 的实现。生产者是 Reflector ，消费者是 Pop 方法的调用者。Queue 还有另一个实现，叫 FIFO，FIFO 的 items 的值没有经过 Delta 的包装 。Delta 是变化的意思。 
 
-    定义了另一个 struct 用来封装对象，带有变化的类型（Added/Updated/Deleted/Replaced/Sync）：
+    定义了另一个 struct 用来封装对象，带有变化的类型 DeltaType（Added/Updated/Deleted/Replaced/Sync）：
 
     ```go
     type Delta struct {
@@ -168,10 +168,11 @@ client-go 实现了一个缓存，定期同步和 apiserver / etcd 中的数据�
     type IndexFunc func(obj interface{}) ([]string, error)
     ```
 
-    1. Index：存储 key 和对象的映射
-    2. Indexers：存储 Index 类型和 IndexFunc 的映射
-    3. Indices：存储 Index 类型和对应类型的 Index 的映射
-    4. IndexFunc：计算对象用于索引的 key。默认的 IndexFunc 是 MetaNamespaceKeyFunc，也就是用对象的 namespace 作为 key。
+    1. Index：通过用户自定义的 indexFunc 对 obj 计算出来的 key 和 obj的 key（通过 `MetaNamespaceKeyFunc()` 计算出来，默认是 `namespace/name`/`name`） 的集合（会有多个）的映射。
+    2. Indexers：存储 Index 类型名和 IndexFunc 的映射
+    3. Indices：存储 Index 类型名和对应类型的 Index 的映射
+    4. IndexFunc：计算 obj 用于索引的 key。由用户自己实现，并注册到 Indexers
+    5. Store 的数据结构一般是个 `items map[string]interface{}`，键是 `MetaNamespaceKeyFunc()` 产生的 key，值是对象指针，每次更新 Store 也会更新几个 Index
 14. ThreadSafeStore（interface）：线程安全的 Store，实现了此接口也意味着实现了 Store 和 Indexer。
 
     ```go
@@ -199,9 +200,9 @@ client-go 实现了一个缓存，定期同步和 apiserver / etcd 中的数据�
 
 有几个比较难懂的概念，我花了很长时间才搞明白：
 
-1. SharedInformer：一开始我能理解 informer 的机制，但是看不懂 ShareInformer 到底是在 share 什么，与一般的 informer 到底有什么区别。一开始以为是不同的 informer share 同一个 cache 或者同一个 queue，实际上不是。后来观察 SharedInformer 的方法，多了 AddEventHandler，说明可以添加多个 handler， 而普通的 informer 只能注册一个handler。SharedInformer 的实现也有一大部分代码是在处理如何分发事件和管理 handler。
-2. index：和 index 相关有几个 map：Index、Indexes、Indices，名称相近，十分令人费解。实际上是为了支持多种 index 算法或者种类。
-3. store：为何有那么多种 store 的接口和实现（Queue、cache、index、FIFO、DeltaFIFO……）？他们之间是什么关系，各自又有什么目的？实际上，资源对象在这里是冗余的，一份数据可能出现在 queue、cache、index 中。
+1. SharedInformer：一开始我能理解 informer 的机制，但是看不懂 ShareInformer 到底是在 share 什么，与一般的 informer 到底有什么区别。一开始以为是不同的 informer share 同一个 cache 或者同一个 queue，实际上不是。后来观察 SharedInformer 的方法，多了 AddEventHandler，说明可以添加多组 handler， 而普通的 informer 只能注册一个handler。多组 handler share 针对同一个对象的 informer。 SharedInformer 的实现也有一大部分代码是在处理如何分发事件和管理 handler。
+2. index：和 index 相关有几个 map：Index、Indexes、Indices，名称相近，十分令人费解。实际上是为了支持多种 index 算法或者种类。这里的 index 思想，有点像数据库 innodb 的聚集索引和非聚集索引，cache 里的 map，存了主键（`namespace/name`）和 obj 指针，对应于聚集索引；cache 里的多个 index，存的是索引以及主键列表，相当于非聚集索引，在 index 里要查到 obj，需要“回表”查一次。
+3. Store：为何有那么多种 store 的接口和实现（Queue、cache、index、FIFO、DeltaFIFO……）？他们之间是什么关系，各自又有什么目的？cache 是 Store 和 Indexer 的实现，底层是一个 ThreadSafeStore，Indexer/Queue 嵌套了 Store，DeltaFIFO 和 FIFO 实现了 Queue 和 Store。全部的 obj 存在 cache 中；queue 是队列，存的是变化的部分 obj，最后会更新到 cache 里。
 
 Ref：
 
