@@ -13,7 +13,7 @@ client-go 的 cache 包缓存对象数据的流向是：kube-apiserver-> reflect
 
 普通 Informer 对同一种对象只能注册一组 ResourceEventHandler，要实现多组 ResourceEventHandler，就需要多创建 Informer，数据是一样的，会造成内存上的浪费。所以 sharedInformer 的引入，支持了针对同一类对象的 ResourceEventHandler 注册到一个 informer 上，实现数据的复用。
 
-本文主要从源码的层面，分析一下这个多组 ResourceEventHandler 的注册是怎么实现的，数据是怎样做分发的。
+本文主要从[源码](https://github.com/kubernetes/client-go/tree/a7d2e0118033720853dcd4aaa50b3b971387262d)的层面，分析一下这个多组 ResourceEventHandler 的注册是怎么实现的，数据是怎样做分发的。
 
 为了实现 sharedindexinformer 挂载多组 handler，相对普通 informer，有两点不同：一是重写了Process方法，用HandleDeltas方法替代；二是引入两个新的结构：sharedProcessor、processorListener，用于做数据分发。
 

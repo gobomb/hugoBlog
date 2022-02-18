@@ -213,3 +213,6 @@ Ref：
 [client-go 之 Indexer 的理解](https://mp.weixin.qq.com/s/xCa6yZTk0X76IZhOx6IbHQ)
 
 
+2022.2.18 UPDATE
+
+1. 
