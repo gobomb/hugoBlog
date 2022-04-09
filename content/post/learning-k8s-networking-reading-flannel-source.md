@@ -284,9 +284,9 @@ vethbe310cc8@if3 # 连接容器网卡和cni0的veth设备
     [root@node02 ~]# brctl show
     bridge name	bridge id		STP enabled	interfaces
     cni0		8000.569a2f1ad085	no		veth95375d8f
-    			    						vethb7b823f5
-    			    						vethbe310cc8
-    			    						vethce9ecc40
+                                                            vethb7b823f5
+                                                            vethbe310cc8
+                                                            vethce9ecc40
     docker0		8000.024210860cd5	no
     ```
 
@@ -326,11 +326,9 @@ vethbe310cc8@if3 # 连接容器网卡和cni0的veth设备
     封装的时候会在 UDP 中加入 VxLAN 的控制信息，比如 VNI。这里 VNI 是 1. flannel.1 命名中的 1 就指示了 VNI 号。同一个 VNI 号的属于同一个网络。
 
     ```
-    [root@node02 ~]# bridge fdb
-    ...
+    [root@node02 ~]# bridge fdb show dev flannel.1
     86:fa:ee:23:17:92 dev flannel.1 dst 10.10.13.62 self permanent
     9e:14:c6:42:2e:bf dev flannel.1 dst 10.10.13.61 self permanent
-    ...
     ```
 
 6. 封装完毕后会从外部网卡发送出去。将 MAC 帧从 UDP 数据报中拆出来，并检查 VNI 号。如果是同一个 VNI 的，往协议层上层走。
