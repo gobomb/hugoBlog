@@ -22,8 +22,9 @@ bridge 和 ovs 设备之间用一对 veth 连起来： vethwe-datapath 和 vethw
 ```
 # 在 node 上执行 ip route 
 10.32.0.0/12 dev weave  proto kernel  scope link  src 10.32.0.1
-10.32.0.0/12 是该集群的 pod CIDR。
 ```
+
+10.32.0.0/12 是该集群的 pod CIDR。
 
 ### CNI 阶段
 kubelet 调用 weave-plugin 这个 cni 插件，通过 weave client 从 weave daemon 获取 ip（ip分配由weave管理），并在容器内配置网卡和 IP，并将网卡对应的 veth 连接到 weave bridge 上。
@@ -95,8 +96,9 @@ system@datapath:
 10.244.1.0/24 via 10.244.1.0 dev flannel.1 onlink
 # 本机 pod 的路由，直接发到 cni0
 10.244.2.0/24 dev cni0  proto kernel  scope link  src 10.244.2.1
-10.244.0.0/16 是集群的 pod CIDR。从 pode CIDR 划分三个子网，10.244.0.0/24,10.244.1.0/24,10.244.2.0/24.
 ```
+
+10.244.0.0/16 是集群的 pod CIDR。从 pode CIDR 划分三个子网，10.244.0.0/24,10.244.1.0/24,10.244.2.0/24.
 
 一般 10.244.0.0 是flannel.1 的 IP，10.244.0.1 是 cni0 的 IP。
 
@@ -162,6 +164,8 @@ default via 169.254.1.1 dev eth0
 calico 容器内的默认网关 IP 都是 `169.254.1.1`。
 
 2. 为了把数据包发送到网关 `169.254.1.1`， 需要广播 arp 请求，获得对应的 mac 地址
+   
+ 
 在所在 node 上 tcpdump 抓包
 
 ```
@@ -171,7 +175,7 @@ calico 容器内的默认网关 IP 都是 `169.254.1.1`。
 
 因为开启了 proxy_arp，node 上的 veth（容器 eth0 的对端）会用自己的 mac 地址响应 arp 广播。
 
-3. 数据包通过 veth 到达 node，再查 node 上的路由表进行路由（转发到其他 veth，或者转发到其他 node）
+1. 数据包通过 veth 到达 node，再查 node 上的路由表进行路由（转发到其他 veth，或者转发到其他 node）
 
 ## 5. Ref
 
